@@ -3,6 +3,26 @@
 #include<unistd.h>
 #include<signal.h>
 
+
+
+
+/*
+
+*************************************************
+*												*
+*				 201220075						*
+*			// Ahmet Akkeci //					*
+*				201220075						*
+*												*
+*************************************************
+
+			Kullanýlan Fonksiyonlar
+		Atof= floata dönüþtürme
+		fork Child oluþturmak için, execv alt program çalýþtýrmak için
+		sleep bekleme için,kill Programý Sonlandýrmak için
+
+*/
+
 int main(int argc, char* argv[])
 {
   printf("[%s] %s saniye  %s calistirilacak...",argv[0],argv[2],argv[1]);
