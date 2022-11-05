@@ -1,52 +1,47 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<unistd.h>
-#include<signal.h>
+#include <stdio.h>
+#include <signal.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 
-
-
-/*
-
-*************************************************
-*												*
-*				 201220075						*
-*			// Ahmet Akkeci //					*
-*				201220075						*
-*												*
-*************************************************
-
-			Kullanýlan Fonksiyonlar
-		Atof= floata dönüþtürme
-		fork Child oluþturmak için, execv alt program çalýþtýrmak için
-		sleep bekleme için,kill Programý Sonlandýrmak için
-
-*/
-
-
-int main(int count, char* arguman[])
+				/*
+				**********************************
+				*								 *
+				*								 *
+				*		//201220075//			 *
+				*		//Ahmet Akkeçi//		 *
+				*								 *
+				*								 *
+				**********************************
+				*/
+				
+int main(int argc,char* argv[])
 {
-  printf("%s saniye  %s calistirilacak\n",arguman[2],arguman[1]);
-  float sure=atof(arguman[2]);
-  fflush(stdout);
-  int alt = fork();
-  if(alt == -1)
-  {
-    printf("hata\n");
-    return -1; 
-  } 
-  else if(alt == 0)
-  {
-    if(execv(arguman[1],arguman) == -1)
+    float time = atof(argv[2]);
+    printf("[%s] %.1f saniye boyunca %s calistirilacak...\n",argv[0],time,argv[1]);
+    int sub_proccess = fork();
+    if(sub_proccess == -1)
     {
-      printf("Program bulunamadi\n");
+         printf("Sub proccess Error");
     }
-  }
-  else{
-		printf("%s programiyim %.1f saniye calisacagim\n",arguman[1],sure);
-        sleep(sure);
-        printf("%.2f sn sona erdi %s kapatiliyor.\n",sure,arguman[1]);
-        kill(alt,9);
+    else if(sub_proccess == 0)
+    {
+        if(execv(argv[1],argv) == -1)
+        {
+            printf("program Ã§alÄ±ÅŸtÄ±rma hatasÄ±.\n");
+        }     
+    }
+    else 
+    {
+        printf("[%s] %s programiyim ve sÃ¼rekli calisiyorum...\n",argv[1],argv[1]);
+        for(int i=0; i<time; i++)
+        {
+            sleep(1);
+            printf("[%s] %d. saniye\n",argv[1],i+1);          
+        }
+        sleep(1);
+        printf("[%s] %.1f saniye sona erdi %s kapatÄ±lÄ±yor\n",argv[0],time,argv[1]);
+        kill(sub_proccess,9);
     }
     return 0;
 }
