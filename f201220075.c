@@ -23,33 +23,30 @@
 
 */
 
-int main(int argc, char* argv[])
+
+int main(int count, char* arguman[])
 {
-  printf("[%s] %s saniye  %s calistirilacak...",argv[0],argv[2],argv[1]);
-  float time=atof(argv[2]);
+  printf("%s saniye  %s calistirilacak\n",arguman[2],arguman[1]);
+  float sure=atof(arguman[2]);
   fflush(stdout);
-  int sub_Procces = fork();
-  if(sub_Procces == -1)
+  int alt = fork();
+  if(alt == -1)
   {
-    printf("\nAlt islem hatali");
+    printf("hata\n");
     return -1; 
   } 
-  else if(sub_Procces == 0)
+  else if(alt == 0)
   {
-    if(execv(argv[1],argv) == -1)
+    if(execv(arguman[1],arguman) == -1)
     {
-      printf("\nProgram calistirma hatasi");
+      printf("Program bulunamadi\n");
     }
   }
   else{
-        printf("\n[%s] programiyim %.1f saniye calisacagim",argv[1],time);
-        for(int i=1; i<=time; i++)
-        {
-          printf("\n[%s] %d saniye ",argv[1],i);
-          sleep(1);
-        }
-        kill(sub_Procces,9);
-        printf("\n[%s] %.2f sn sona erdi %s kapatiliyor.\n",argv[0],time,argv[1]);
+		printf("%s programiyim %.1f saniye calisacagim\n",arguman[1],sure);
+        sleep(sure);
+        printf("%.2f sn sona erdi %s kapatiliyor.\n",sure,arguman[1]);
+        kill(alt,9);
     }
     return 0;
 }
